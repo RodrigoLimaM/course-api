@@ -21,6 +21,26 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course save(Course course) {
+        course.setId(null);
         return courseRepository.save(course);
+    }
+
+    @Override
+    public Course findById(Integer id) {
+        return courseRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Course> findByName(String name) {
+        return courseRepository.findCourseByNameContainingIgnoreCase(name);
+    }
+
+    @Override
+    public Course update(Course course) {
+        Course actual = this.findById(course.getId());
+        actual.setName(course.getName());
+        actual.setArea(course.getArea());
+
+        return courseRepository.save(actual);
     }
 }
