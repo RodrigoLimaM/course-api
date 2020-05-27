@@ -1,5 +1,6 @@
 package com.courses.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -20,6 +21,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "student")
+@JsonIgnoreProperties("course")
 public class Student implements Serializable {
 
     @Id
