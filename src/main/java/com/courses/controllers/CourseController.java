@@ -7,6 +7,7 @@ import com.courses.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,7 +57,7 @@ public class CourseController {
             @Valid @RequestBody CourseDTO dto) throws URISyntaxException {
         Course newCourse = courseService.save(mapper.mapCourseDTOToCourse(dto));
         return ResponseEntity
-                .created(new URI("/courses" +dto.getId()))
+                .created(new URI("/courses/" +dto.getId()))
                 .body(newCourse);
     }
 
@@ -67,6 +68,12 @@ public class CourseController {
         Course newCourse = mapper.mapCourseDTOToCourse(dto);
         newCourse.setId(id);
         courseService.update(newCourse);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(newCourse);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Course> deleteCourse(@PathVariable Integer id) {
+        Course deletedCourse = courseService.deleteById(id);
+        return ResponseEntity.ok().body(deletedCourse);
     }
 }
