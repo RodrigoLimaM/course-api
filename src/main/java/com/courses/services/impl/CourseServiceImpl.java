@@ -40,6 +40,7 @@ public class CourseServiceImpl implements CourseService {
         Course actual = this.findById(course.getId());
         actual.setName(course.getName());
         actual.setArea(course.getArea());
+        actual.setCourseValue(course.getCourseValue());
 
         return courseRepository.save(actual);
     }

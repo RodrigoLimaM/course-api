@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,4 +23,8 @@ public class CourseDTO implements Serializable {
     @NotNull
     @NotBlank
     private String area;
+
+    @NotNull
+    @NotBlank
+    private BigDecimal courseValue;
 }

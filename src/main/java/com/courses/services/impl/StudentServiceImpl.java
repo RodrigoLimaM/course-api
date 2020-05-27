@@ -28,7 +28,14 @@ public class StudentServiceImpl implements StudentService {
         return StudentDTO.builder()
                 .id(student.getId())
                 .name(student.getName())
-                .courseDTO(new CourseDTO(course.getId(), course.getName(), course.getArea()))
+                .courseDTO(new CourseDTO(course.getId(), course.getName(), course.getArea(), course.getCourseValue()))
                 .build();
+    }
+
+    @Override
+    public Student deleteById(Integer id) {
+        Student deletedStudent = studentRepository.findById(id).orElse(null);
+        studentRepository.deleteById(id);
+        return deletedStudent;
     }
 }

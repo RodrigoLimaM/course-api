@@ -1,14 +1,13 @@
 package com.courses.controllers;
 
-import com.courses.entities.Course;
 import com.courses.entities.Student;
-import com.courses.entities.dto.CourseDTO;
 import com.courses.entities.dto.StudentDTO;
 import com.courses.entities.mapper.StudentMapper;
 import com.courses.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +30,7 @@ public class StudentController {
     private StudentMapper mapper;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<StudentDTO> findCourseById(@PathVariable Integer id) {
+    public ResponseEntity<StudentDTO> findStudentById(@PathVariable Integer id) {
         StudentDTO studentDTO = studentService.findById(id);
         return ResponseEntity.ok().body(studentDTO);
     }
@@ -44,5 +43,11 @@ public class StudentController {
         return ResponseEntity
                 .created(new URI("/students/" +courseId +"/" +dto.getId()))
                 .body(newStudent);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Student> deleteStudent(@PathVariable Integer id) {
+        Student deletedStudent = studentService.deleteById(id);
+        return ResponseEntity.ok().body(deletedStudent);
     }
 }

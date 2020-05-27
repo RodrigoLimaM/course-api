@@ -8,4 +8,6 @@ public interface StudentService {
     Student save(Student student);
 
     StudentDTO findById(Integer id);
+
+    Student deleteById(Integer id);
 }

@@ -53,7 +53,8 @@ public class Course implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
-    @Transient
+    @NonNull
+    @Column(name = "course_value")
     private BigDecimal courseValue;
 
     @ToString.Exclude
