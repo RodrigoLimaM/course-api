@@ -7,7 +7,9 @@ import com.courses.entities.dto.StudentDTO;
 import com.courses.entities.mapper.StudentMapper;
 import com.courses.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +29,12 @@ public class StudentController {
 
     @Autowired
     private StudentMapper mapper;
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<StudentDTO> findCourseById(@PathVariable Integer id) {
+        StudentDTO studentDTO = studentService.findById(id);
+        return ResponseEntity.ok().body(studentDTO);
+    }
 
     @PostMapping(value = "/{courseId}")
     public ResponseEntity<Student> saveStudent(

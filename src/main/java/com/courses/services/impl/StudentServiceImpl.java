@@ -1,6 +1,9 @@
 package com.courses.services.impl;
 
+import com.courses.entities.Course;
 import com.courses.entities.Student;
+import com.courses.entities.dto.CourseDTO;
+import com.courses.entities.dto.StudentDTO;
 import com.courses.repositories.StudentRepository;
 import com.courses.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +19,16 @@ public class StudentServiceImpl implements StudentService {
     public Student save(Student student) {
         student.setId(null);
         return studentRepository.save(student);
+    }
+
+    @Override
+    public StudentDTO findById(Integer id) {
+        Student student = studentRepository.findById(id).orElse(null);
+        Course course = student.getCourse();
+        return StudentDTO.builder()
+                .id(student.getId())
+                .name(student.getName())
+                .courseDTO(new CourseDTO(course.getId(), course.getName(), course.getArea()))
+                .build();
     }
 }
