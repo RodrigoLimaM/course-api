@@ -35,6 +35,7 @@ public class StudentMapper {
                         .area(course.getArea())
                         .courseValue(course.getCourseValue())
                         .build())
+                .registrationDate(student.getRegistrationDate())
                 .build();
     }
 }
