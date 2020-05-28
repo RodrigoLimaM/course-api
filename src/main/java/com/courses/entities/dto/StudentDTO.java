@@ -1,6 +1,5 @@
 package com.courses.entities.dto;
 
-import com.courses.entities.Course;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

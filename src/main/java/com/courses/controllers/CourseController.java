@@ -2,7 +2,6 @@ package com.courses.controllers;
 
 import com.courses.entities.Course;
 import com.courses.entities.dto.CourseDTO;
-import com.courses.entities.mapper.CourseMapper;
 import com.courses.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -29,51 +28,38 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @Autowired
-    private CourseMapper mapper;
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Course>> getCourses() {
-        List<Course> responseList = courseService.getCourses();
-        return ResponseEntity
-                    .ok()
-                    .body(responseList);
+        return ResponseEntity.ok().body(courseService.getCourses());
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Course> findCourseById(@PathVariable Integer id) {
-        Course course = courseService.findById(id);
-        return ResponseEntity.ok().body(course);
+        return ResponseEntity.ok().body(courseService.findById(id));
     }
 
     @GetMapping(value = "/name", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Course>> findCourseByName(@RequestParam String name) {
-        List<Course> courses = courseService.findByName(name);
-        return ResponseEntity.ok().body(courses);
+        return ResponseEntity.ok().body(courseService.findByName(name));
     }
 
     @PostMapping
     public ResponseEntity<Course> saveCourse(
             @Valid @RequestBody CourseDTO dto) throws URISyntaxException {
-        Course newCourse = courseService.save(mapper.mapCourseDTOToCourse(dto));
         return ResponseEntity
                 .created(new URI("/courses/" +dto.getId()))
-                .body(newCourse);
+                .body(courseService.save(dto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Course> updateCourse(
             @Valid @RequestBody CourseDTO dto,
             @PathVariable Integer id) throws URISyntaxException {
-        Course newCourse = mapper.mapCourseDTOToCourse(dto);
-        newCourse.setId(id);
-        courseService.update(newCourse);
-        return ResponseEntity.ok().body(newCourse);
+        return ResponseEntity.ok().body(courseService.update(dto, id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Course> deleteCourse(@PathVariable Integer id) {
-        Course deletedCourse = courseService.deleteById(id);
-        return ResponseEntity.ok().body(deletedCourse);
+        return ResponseEntity.ok().body(courseService.deleteById(id));
     }
 }
